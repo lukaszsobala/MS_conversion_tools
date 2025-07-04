@@ -41,7 +41,7 @@ Rscript convertToOpenMS.R /path/to/file.mzXML /path/to/output
 Install required R packages:
 
 ```r
-install.packages(c("MALDIquant", "MALDIquantForeign"))
+BiocManager::install(c("MALDIquant", "MALDIquantForeign"))
 ```
 
 ---
@@ -52,4 +52,5 @@ install.packages(c("MALDIquant", "MALDIquantForeign"))
 
 ---
 
-For questions or issues, please contact the repository maintainer.
+For questions or issues, please contact me at lukasz.sobala@hirszfeld.pl, or submit an issue.
+The scripts were made with the help of LLMs.
