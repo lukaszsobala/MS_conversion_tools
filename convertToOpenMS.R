@@ -7,7 +7,13 @@ library(MALDIquantForeign)
 # Get command-line arguments; the first argument should be the folder path
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) < 1) {
-  stop("Usage: Rscript convertBrukerFlex.R /path/to/BrukerFlexDirectory [output_directory]") # nolint: line_length_linter.
+  stop(paste(
+    "Usage: Rscript convertToOpenMS.R <input_path> [output_directory]",
+    "",
+    "<input_path>: Path to a Bruker Flex directory or an mzXML file.",
+    "[output_directory]: (Optional) Directory to save the output files. Defaults to current working directory.",
+    sep = "\n"
+  ))
 }
 
 # Directory containing Bruker Flex data or mzXML file
