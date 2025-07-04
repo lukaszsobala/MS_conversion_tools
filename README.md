@@ -4,7 +4,7 @@ This repository provides tools for converting mass spectrometry data between dif
 
 ## Script: `convertToOpenMS.R`
 
-A script to convert Bruker Flex directories or mzXML files to both MSD and mzML formats using the MALDIquant and MALDIquantForeign R packages.
+A script to convert Bruker Flex directories or mzXML files to both MSD and mzML formats using the `MALDIquant` and `MALDIquantForeign` R packages.
 
 ### Usage
 
@@ -17,7 +17,7 @@ Rscript convertToOpenMS.R <input_path> [output_directory]
 
 ### Example
 
-Convert a Bruker Flex directory:
+Convert a Bruker Flex directory (only MS1, fragmentation spectra will **not** work):
 
 ```sh
 Rscript convertToOpenMS.R /path/to/BrukerFlexDirectory /path/to/output
@@ -49,6 +49,8 @@ BiocManager::install(c("MALDIquant", "MALDIquantForeign"))
 ## Other Files
 
 - `simple_anonymize.sh`: Shell script for anonymizing data (see script for details).
+
+Usage: `./simple_anonymize.sh input_file [anonymous_name]`. It works with msd, mzML and mzXML files and clears all identifiable info that is usually present in the files.
 
 ---
 
