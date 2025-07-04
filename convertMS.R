@@ -50,21 +50,62 @@ anonymize_directory <- function(output_dir, anonymous_name) {
   }
 }
 
+# Parse command-line arguments
+parse_args <- function(args) {
+  # Initialize default values
+  parsed <- list(
+    input_path = NULL,
+    output_dir = getwd(),
+    anonymous_name = "anonymous_sample",
+    anonymize = FALSE
+  )
+  
+  # Look for flags
+  i <- 1
+  while (i <= length(args)) {
+    if (args[i] == "--anonymize" || args[i] == "-a") {
+      parsed$anonymize <- TRUE
+      args <- args[-i]  # Remove the flag
+    } else {
+      i <- i + 1
+    }
+  }
+  
+  # Parse positional arguments
+  if (length(args) >= 1) parsed$input_path <- args[1]
+  if (length(args) >= 2) parsed$output_dir <- args[2]
+  if (length(args) >= 3) parsed$anonymous_name <- args[3]
+  
+  return(parsed)
+}
+
 # Get command-line arguments
 args <- commandArgs(trailingOnly = TRUE)
-if (length(args) < 1) {
-  stop("Usage: Rscript convertMS.R /path/to/input [output_directory] [anonymous_name]")
+if (length(args) < 1 || "--help" %in% args || "-h" %in% args) {
+  stop("Usage: Rscript convertMS.R /path/to/input [output_directory] [anonymous_name] [--anonymize|-a]
+  
+  Options:
+    --anonymize, -a    Anonymize the output files
+    --help, -h         Show this help message
+  ")
 }
 
 # Parse arguments
-input_path <- args[1]
-output_dir <- if (length(args) >= 2) args[2] else getwd()
-anonymous_name <- if (length(args) >= 3) args[3] else "anonymous_sample"
+parsed_args <- parse_args(args)
+input_path <- parsed_args$input_path
+output_dir <- parsed_args$output_dir
+anonymous_name <- parsed_args$anonymous_name
+anonymize <- parsed_args$anonymize
 
 cat("=== Mass Spectrometry Conversion and Anonymization Tool ===\n")
 cat("Input:", input_path, "\n")
 cat("Output directory:", output_dir, "\n")
-cat("Anonymous name:", anonymous_name, "\n\n")
+if (anonymize) {
+  cat("Anonymous name:", anonymous_name, "\n")
+  cat("Anonymization: Enabled\n\n")
+} else {
+  cat("Anonymization: Disabled\n\n")
+}
 
 # Check if the input is an mzXML file
 if (tolower(substr(input_path, nchar(input_path) - 5, nchar(input_path))) == ".mzxml") {
@@ -93,9 +134,13 @@ cat("Exporting to mzML format...\n")
 exportMzMl(spectra, file = output_dir)
 cat("Data exported to", output_dir, "in mzML format\n")
 
-# Anonymize the output files
-cat("\n=== Anonymization Phase ===\n")
-anonymize_directory(output_dir, anonymous_name)
-
-cat("\n=== Conversion and Anonymization Complete ===\n")
-cat("All files have been converted and anonymized in:", output_dir, "\n")
+# Anonymize the output files if requested
+if (anonymize) {
+  cat("\n=== Anonymization Phase ===\n")
+  anonymize_directory(output_dir, anonymous_name)
+  cat("\n=== Conversion and Anonymization Complete ===\n")
+  cat("All files have been converted and anonymized in:", output_dir, "\n")
+} else {
+  cat("\n=== Conversion Complete ===\n")
+  cat("All files have been converted in:", output_dir, "\n")
+}
