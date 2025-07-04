@@ -14,7 +14,7 @@ if (length(args) < 1) {
 input_dir <- args[1]
 
 # Check if the input is an mzXML file
-if (tolower(substr(input_dir, nchar(input_dir) - 5, nchar(input_dir))) == ".mzxml") {
+if (tolower(substr(input_dir, nchar(input_dir) - 5, nchar(input_dir))) == ".mzxml") { # nolint: line_length_linter.
   # Import the spectra from the mzXML file using importMzXml()
   spectra <- importMzXml(input_dir)
   cat("Imported mzXML file:", input_dir, "\n")
