@@ -1,6 +1,6 @@
 # MS Conversion Tools
 
-This repository provides tools for converting mass spectrometry data between different formats using R and shell scripts.
+This repository provides tools for converting mass spectrometry data from the Bruker format or the older mzXML format to the currently recommended format (mzML). Conversion from msd is supported for mMass compatibility. It also contains a bash script to anonymize the file contents.
 
 ## Script: `convertToOpenMS.R`
 
