@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Simple Mass Spec Anonymization Script
-# Usage: ./simple_anonymize.sh input_file [anonymous_name]
+# Usage: ./anonymizeMS.sh input_file [anonymous_name]
 
 INPUT_FILE="$1"
 ANONYMOUS_NAME="${2:-anonymous_sample}"

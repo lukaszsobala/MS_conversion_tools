@@ -48,9 +48,9 @@ BiocManager::install(c("MALDIquant", "MALDIquantForeign"))
 
 ## Other Files
 
-- `simple_anonymize.sh`: Shell script for anonymizing data (see script for details).
+- `anonymizeMS.sh`: Shell script for anonymizing data (see script for details).
 
-Usage: `./simple_anonymize.sh input_file [anonymous_name]`. It works with msd, mzML and mzXML files and clears all identifiable info that is usually present in the files.
+Usage: `./anonymizeMS.sh input_file [anonymous_name]`. It works with msd, mzML and mzXML files and clears all identifiable info that is usually present in the files.
 
 ---
 
