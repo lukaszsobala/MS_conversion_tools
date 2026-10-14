@@ -21,8 +21,11 @@ elif grep -q "<mSD" "$INPUT_FILE"; then
     # mSD: Replace title content
     sed 's|<title>[^<]*</title>|<title>'"$ANONYMOUS_NAME"' </title>|g' "$INPUT_FILE" > "$OUTPUT_FILE"
 elif grep -q "<mzML" "$INPUT_FILE"; then
-    # mzML: Replace only the id attribute within the mzML tag
+    # mzML: Replace the mzML id, the run id and the spectrum name (the name
+    # of the MS:1000580 cvParam, where mMass writes the sample name)
     sed -e 's/\(<mzML[^>]*id=\)"[^"]*"/\1"'"$ANONYMOUS_NAME"'"/g' \
+        -e 's/\(<run [^>]*id=\)"[^"]*"/\1"'"$ANONYMOUS_NAME"'"/g' \
+        -e 's/\(accession="MS:1000580" name=\)"[^"]*"/\1"'"$ANONYMOUS_NAME"'"/g' \
         -e 's/ location="[^"]*"/ location="'"$ANONYMOUS_NAME"'"/g' \
         -e 's/spotID="[^"]*"/spotID="'"$ANONYMOUS_NAME"'"/g' \
         "$INPUT_FILE" > "$OUTPUT_FILE"
